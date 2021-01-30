@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+    tty: true
+    restart: always
+    volumes:
+      - .:/go/src/github.com/naoki/gacha
+    command: go run main.go
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    environment:
+      POSTGRES_ROOT_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: yoko1893
+      POSTGRES_DB: gacha
+      TZ: Asia/Tokyo
+    ports:
+      - 5432:5432
+    tty: true
+    restart: always
