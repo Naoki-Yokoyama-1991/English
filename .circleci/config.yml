@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.9
+      - image: circleci/postgres:9.4
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
+      TZ: /usr/share/zoneinfo/Europe/Kiev
+      GO111MODULE: "on"
+    working_directory: /go/src/github.com/naoki/gacha
+    steps:
+      - checkout
+      - restore_cache: &restore_cache
+          name: Restore go modules cache
+          keys:
+            - mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
+      - run: &vendoring
+          name: Vendoring
+          command: go mod download
+      - save_cache: &save_cache
+          name: Save go modules cache
+          key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg/mod/cache
+      # - run:
+      #     name: Get
+      #     command: go get -v -t -d ./...
+      - run:
+          name: Test
+          command: go test -v ./...
