@@ -24,7 +24,7 @@ jobs:
           name: Save go modules cache
           key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
           paths:
-            - /Users/nao/Desktop/production/app/progress/Go-React-Redux/backend/go.mod
+            - /backend
       # - run:
       #     name: Get
       #     command: go get -v -t -d ./...
