@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 services:
   app:
     build:
@@ -9,7 +9,6 @@ services:
       - postgres
     depends_on:
       - postgres
-
     tty: true
     restart: always
     volumes:
@@ -19,11 +18,9 @@ services:
     image: postgres:alpine
     container_name: postgres
     environment:
-      POSTGRES_ROOT_PASSWORD: root
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: yoko1893
-      POSTGRES_DB: gacha
-      TZ: Asia/Tokyo
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: admin
     ports:
       - 5432:5432
     tty: true
