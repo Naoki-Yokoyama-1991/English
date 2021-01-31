@@ -9,13 +9,19 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/naoki/gacha/app/configs"
+	"github.com/naoki/gacha/app/routes"
 )
 
-func Run() {
+type Server struct {
+	DB     *gorm.DB
+	Router *gin.Engine
+}
+
+func (server *Server) Run() {
 
 	/* @Setup gin.Engin */
-	var router = gin.Default()
-
+	server.Router = gin.Default()
+	routes.Routes(server.Router)
 	/* @Setup godotenv */
 	var err error
 	err = godotenv.Load()
@@ -29,16 +35,16 @@ func Run() {
 	fmt.Println(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
 
 	/* @Connects Database */
-	db, err := gorm.Open(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
+	server.DB, err = gorm.Open(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("connect to postgres")
-	db.LogMode(true)
-	defer db.Close()
+	server.DB.LogMode(true)
+	defer server.DB.Close()
 
 	// @Connects Server
 	fmt.Printf("connect to http://%s:%s/ for Gin", config.Host, config.Port)
 	port := fmt.Sprintf(":%s", config.Port)
-	router.Run(port)
+	server.Router.Run(port)
 }

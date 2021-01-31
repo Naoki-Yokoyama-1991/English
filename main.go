@@ -4,7 +4,9 @@ import (
 	"github.com/naoki/gacha/app/api"
 )
 
+var server = api.Server{}
+
 func main() {
 
-	api.Run()
+	server.Run()
 }
