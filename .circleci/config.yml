@@ -19,7 +19,7 @@ jobs:
             - mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
       - run: &vendoring
           name: Vendoring
-          command: go mod download ./src/backend
+          command: go mod download ./...
       - save_cache: &save_cache
           name: Save go modules cache
           key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
