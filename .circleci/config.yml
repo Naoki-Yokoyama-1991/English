@@ -3,11 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.9
-      - image: circleci/postgres:9.4
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: admin
       TZ: /usr/share/zoneinfo/Europe/Kiev
       GO111MODULE: "on"
     working_directory: /go/src/github.com/naoki/gacha
