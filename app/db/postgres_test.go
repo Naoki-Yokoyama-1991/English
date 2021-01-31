@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/joho/godotenv"
@@ -13,5 +14,9 @@ func TestPostgres(t *testing.T) {
 	actual := c.GetPostgresConnectionInfo()
 	expected := "host=postgres port=5432 user=admin password=admin dbname=admin sslmode=disable"
 
-	assert.Equal(t, expected, actual)
+	if assert.Equal(t, expected, actual) {
+		fmt.Printf("%v", "good")
+	} else {
+		t.Errorf("c.GetPostgresConnectionInfo() = %v, want %v", c.GetPostgresConnectionInfo(), expected)
+	}
 }

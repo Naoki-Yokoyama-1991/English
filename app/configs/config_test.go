@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/joho/godotenv"
@@ -17,14 +18,22 @@ func TestPostgres(t *testing.T) {
 		t.Log("log1")
 		actual := c.Postgres.GetPostgresConnectionInfo()
 		expected := "host=postgres port=5432 user=admin password=admin dbname=admin sslmode=disable"
-		assert.Equal(t, expected, actual)
+		if assert.Equal(t, expected, actual) {
+			fmt.Printf("%v", "good_1")
+		} else {
+			t.Fail()
+		}
 	})
 
 	t.Run("log2", func(t *testing.T) {
 		t.Log("log2")
 		actual := c.Postgres.Dialect()
 		expected := "postgres"
-		assert.Equal(t, expected, actual)
+		if assert.Equal(t, expected, actual) {
+			fmt.Printf("%v", "good_2")
+		} else {
+			t.Error("error")
+		}
 	})
 
 	t.Log("finish")
