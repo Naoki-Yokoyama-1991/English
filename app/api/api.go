@@ -18,10 +18,13 @@ type Server struct {
 }
 
 func (server *Server) Run() {
-
 	/* @Setup gin.Engin */
 	server.Router = gin.Default()
 	routes.Routes(server.Router)
+	/* @Setup middlewares */
+	server.Router.Use(gin.Logger())
+	server.Router.Use(gin.Recovery())
+
 	/* @Setup godotenv */
 	var err error
 	err = godotenv.Load()
