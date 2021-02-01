@@ -12,10 +12,10 @@ const (
 
 // Config object
 type Config struct {
+	Postgres db.PostgresConfig `json:"postgres"`
 	Env      string            `env:"ENV"`
 	Host     string            `env:"APP_HOST"`
 	Port     string            `env:"APP_PORT"`
-	Postgres db.PostgresConfig `json:"postgres"`
 }
 
 // IsPros Checks if env is production
