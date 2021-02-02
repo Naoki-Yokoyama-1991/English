@@ -27,7 +27,6 @@ func CreateUser(c *gin.Context) {
 	}
 
 	user := models.User{}
-
 	err = json.Unmarshal(body, &user)
 	if err != nil {
 		errList["Unmarshal_error"] = "Cannot unmarshal body"

@@ -20,7 +20,7 @@ type Server struct {
 
 func (server *Server) Run() {
 	/* @Setup gin.Engin */
-	server.Router = gin.Default()
+	server.Router = gin.New()
 	routes.Routes(server.Router)
 	/* @Setup middlewares */
 	server.Router.Use(gin.Logger())
