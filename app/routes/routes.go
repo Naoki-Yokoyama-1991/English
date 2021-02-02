@@ -7,6 +7,6 @@ import (
 
 func Routes(r *gin.Engine) {
 
-	v2 := r.Group("/api")
-	v2.POST("/users", controllers.CreateUser)
+	v1 := r.Group("/api")
+	v1.POST("/users", controllers.CreateUser)
 }

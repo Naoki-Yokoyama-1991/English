@@ -9,6 +9,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/naoki/gacha/app/configs"
+	"github.com/naoki/gacha/app/database"
 	"github.com/naoki/gacha/app/routes"
 )
 
@@ -38,13 +39,8 @@ func (server *Server) Run() {
 	fmt.Println(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
 
 	/* @Connects Database */
-	server.DB, err = gorm.Open(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("connect to postgres")
-	server.DB.LogMode(true)
-	defer server.DB.Close()
+	database.Connection()
+	defer database.Close()
 
 	// @Connects Server
 	fmt.Printf("connect to http://%s:%s/ for Gin", config.Host, config.Port)

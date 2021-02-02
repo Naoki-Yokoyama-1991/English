@@ -6,19 +6,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	db "github.com/naoki/gacha/app/database"
 	"github.com/naoki/gacha/app/models"
 	"github.com/naoki/gacha/app/services"
 	"github.com/naoki/gacha/app/utils/formaterror"
 )
 
-type Server struct {
-	DB     *gorm.DB
-	Router *gin.Engine
-}
-
 // var server = api.Server{}
-func (server *Server) CreateUser(c *gin.Context) {
+func CreateUser(c *gin.Context) {
 
 	errList := map[string]string{}
 	body, err := ioutil.ReadAll(c.Request.Body)
@@ -46,7 +41,7 @@ func (server *Server) CreateUser(c *gin.Context) {
 	/* @Set services */
 	services.Prepare(&user)
 
-	userCreated, err := user.SaveUser(server.DB)
+	userCreated, err := user.SaveUser(db.DB)
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
 		errList = formattedError
@@ -54,5 +49,7 @@ func (server *Server) CreateUser(c *gin.Context) {
 			"status":   http.StatusCreated,
 			"response": userCreated,
 		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "user": user})
 	}
 }
