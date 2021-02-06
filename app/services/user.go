@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/naoki/gacha/app/models"
+	"github.com/naoki/task/app/models"
 )
 
 func Prepare(user *models.User) {

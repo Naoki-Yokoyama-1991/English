@@ -12,7 +12,7 @@ services:
     tty: true
     restart: always
     volumes:
-      - .:/go/src/github.com/naoki/gacha
+      - .:/go/src/github.com/naoki/task
     command: go run main.go
   postgres:
     image: postgres:alpine

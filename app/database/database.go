@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
-	"github.com/naoki/gacha/app/configs"
-	"github.com/naoki/gacha/app/models"
+	"github.com/naoki/task/app/configs"
+	"github.com/naoki/task/app/models"
 )
 
 var DB *gorm.DB
@@ -17,6 +17,9 @@ func Connection() {
 	db, err := gorm.Open(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
 	if err != nil {
 		panic(err)
+	}
+	if err = db.DB().Ping(); err != nil {
+		return
 	}
 
 	DB = db

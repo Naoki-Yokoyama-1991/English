@@ -8,9 +8,10 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/naoki/gacha/app/configs"
-	"github.com/naoki/gacha/app/database"
-	"github.com/naoki/gacha/app/routes"
+	"github.com/naoki/task/app/configs"
+	"github.com/naoki/task/app/database"
+	"github.com/naoki/task/app/middlewares"
+	"github.com/naoki/task/app/routes"
 )
 
 type Server struct {
@@ -23,6 +24,7 @@ func (server *Server) Run() {
 	server.Router = gin.New()
 	routes.Routes(server.Router)
 	/* @Setup middlewares */
+	server.Router.Use(middlewares.CORSMiddleware())
 	server.Router.Use(gin.Logger())
 	server.Router.Use(gin.Recovery())
 

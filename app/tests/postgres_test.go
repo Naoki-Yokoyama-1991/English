@@ -1,18 +1,19 @@
-package postgres
+package tests
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/joho/godotenv"
+	"github.com/naoki/task/app/postgres"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPostgres(t *testing.T) {
 	godotenv.Load("../../.env")
-	c := GetPostgresConfig()
+	c := postgres.GetPostgresConfig()
 	actual := c.GetPostgresConnectionInfo()
-	expected := "host=localhost port=5432 user=user password=yoko1893 dbname=gacha sslmode=disable"
+	expected := "host=postgres port=5432 user=admin password=admin dbname=admin sslmode=disable"
 
 	if assert.Equal(t, expected, actual) {
 		fmt.Printf("%v", "good")
