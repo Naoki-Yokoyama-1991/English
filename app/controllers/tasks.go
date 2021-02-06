@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	db "github.com/naoki/task/app/database"
@@ -64,13 +63,13 @@ func CreateUser(c *gin.Context) {
 	}
 }
 
-func GetUser(c *gin.Context) {
-	errList = map[string]string{}
+// func GetUser(c *gin.Context) {
+// 	errList = map[string]string{}
 
-	userID := c.Param("id")
+// 	userID := c.Param("id")
 
-	uid, err := strconv.ParseUint(userID, 10, 32)
-	if err != nil {
+// 	uid, err := strconv.ParseUint(userID, 10, 32)
+// 	if err != nil {
 
-	}
-}
+// 	}
+// }
