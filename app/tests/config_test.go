@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
-	"github.com/naoki/task/app/configs"
+	"github.com/naoki/english/app/configs"
 	"github.com/stretchr/testify/assert"
 )
 

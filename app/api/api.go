@@ -2,15 +2,18 @@ package api
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/naoki/task/app/configs"
-	"github.com/naoki/task/app/database"
-	"github.com/naoki/task/app/middlewares"
+	"github.com/naoki/english/app/configs"
+	"github.com/naoki/english/app/database"
+	"github.com/naoki/english/app/middlewares"
+	"github.com/naoki/english/app/repository"
+	"github.com/naoki/english/app/routes"
+	"github.com/naoki/english/app/service"
+	"github.com/sirupsen/logrus"
 )
 
 type Server struct {
@@ -31,10 +34,9 @@ func (server *Server) Run() {
 	var err error
 	err = godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error getting env, %v", err)
-	} else {
-		fmt.Println("We are getting values")
+		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
+
 	config := configs.GetConfig()
 
 	fmt.Println(config.Postgres.Dialect(), config.Postgres.GetPostgresConnectionInfo())
@@ -42,6 +44,12 @@ func (server *Server) Run() {
 	/* @Connects Database */
 	database.Connection()
 	defer database.Close()
+
+	/* @CRepository */
+	repos := repository.NewRepository(database.DB)
+	services := service.NewService(repos)
+	_ = routes.NewHandler(services)
+	// handlers.Routes()
 
 	// @Connects Server
 	fmt.Printf("connect to http://%s:%s/ for Gin", config.Host, config.Port)

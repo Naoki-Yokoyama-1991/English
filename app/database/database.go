@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
-	"github.com/naoki/task/app/configs"
-	"github.com/naoki/task/app/models"
+	"github.com/naoki/english/app/configs"
+	"github.com/naoki/english/app/models"
 )
 
 var DB *gorm.DB

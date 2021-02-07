@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/naoki/task/app/api"
+	"github.com/naoki/english/app/api"
 )
 
 var server = api.Server{}

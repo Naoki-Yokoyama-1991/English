@@ -3,7 +3,7 @@ package configs
 import (
 	"os"
 
-	"github.com/naoki/task/app/postgres"
+	"github.com/naoki/english/app/postgres"
 )
 
 const (
