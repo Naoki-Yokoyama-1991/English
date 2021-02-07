@@ -26,7 +26,7 @@ func Connection() {
 	fmt.Println("connect to postgres")
 	DB.LogMode(true)
 
-	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.Phrase{})
 }
 
 func Close() {

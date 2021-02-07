@@ -11,7 +11,6 @@ import (
 	"github.com/naoki/task/app/configs"
 	"github.com/naoki/task/app/database"
 	"github.com/naoki/task/app/middlewares"
-	"github.com/naoki/task/app/routes"
 )
 
 type Server struct {
@@ -22,7 +21,7 @@ type Server struct {
 func (server *Server) Run() {
 	/* @Setup gin.Engin */
 	server.Router = gin.New()
-	routes.Routes(server.Router)
+	// routes.Routes(server.Router)
 	/* @Setup middlewares */
 	server.Router.Use(middlewares.CORSMiddleware())
 	server.Router.Use(gin.Logger())
