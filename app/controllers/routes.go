@@ -14,8 +14,8 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-func (h *Handler) Routes(r *gin.Engine) *gin.Engine {
-	router := gin.Default()
+func (h *Handler) Routes() *gin.Engine {
+	router := gin.New()
 
 	v1 := router.Group("/api")
 	v1.POST("/phrase", h.AddPhrase)

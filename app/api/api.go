@@ -22,13 +22,10 @@ type Server struct {
 }
 
 func (server *Server) Run() {
+	logrus.SetFormatter(new(logrus.JSONFormatter))
 	/* @Setup gin.Engin */
-	server.Router = gin.New()
 	// routes.Routes(server.Router)
 	/* @Setup middlewares */
-	server.Router.Use(middlewares.CORSMiddleware())
-	server.Router.Use(gin.Logger())
-	server.Router.Use(gin.Recovery())
 
 	/* @Setup godotenv */
 	var err error
@@ -48,11 +45,17 @@ func (server *Server) Run() {
 	/* @Connects Repository */
 	repos := repository.NewRepository(database.DB)
 	services := service.NewService(repos)
-	_ = controllers.NewHandler(services)
+	handlers := controllers.NewHandler(services)
+
 	// handlers.Routes()
 
 	// @Connects Server
 	fmt.Printf("connect to http://%s:%s/ for Gin", config.Host, config.Port)
 	port := fmt.Sprintf(":%s", config.Port)
-	server.Router.Run(port)
+	servers := handlers.Routes()
+
+	servers.Use(middlewares.CORSMiddleware())
+	servers.Use(gin.Logger())
+	servers.Use(gin.Recovery())
+	servers.Run(port)
 }
