@@ -8,10 +8,10 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
 	"github.com/naoki/english/app/configs"
+	"github.com/naoki/english/app/controllers"
 	"github.com/naoki/english/app/database"
 	"github.com/naoki/english/app/middlewares"
 	"github.com/naoki/english/app/repository"
-	"github.com/naoki/english/app/routes"
 	"github.com/naoki/english/app/service"
 	"github.com/sirupsen/logrus"
 )
@@ -45,10 +45,10 @@ func (server *Server) Run() {
 	database.Connection()
 	defer database.Close()
 
-	/* @CRepository */
+	/* @Connects Repository */
 	repos := repository.NewRepository(database.DB)
 	services := service.NewService(repos)
-	_ = routes.NewHandler(services)
+	_ = controllers.NewHandler(services)
 	// handlers.Routes()
 
 	// @Connects Server

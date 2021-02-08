@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/naoki/english/app/configs"
 	"github.com/naoki/english/app/models"
+	"github.com/sirupsen/logrus"
 )
 
 var DB *gorm.DB
@@ -19,7 +20,7 @@ func Connection() {
 		panic(err)
 	}
 	if err = db.DB().Ping(); err != nil {
-		return
+		logrus.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
 	DB = db
@@ -33,5 +34,7 @@ func Close() {
 	if DB == nil {
 		return
 	}
-	DB.Close()
+	if err := DB.Close(); err != nil {
+		logrus.Errorf("error occured on db connection close: %s", err.Error())
+	}
 }

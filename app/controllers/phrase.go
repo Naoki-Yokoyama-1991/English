@@ -7,12 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/naoki/english/app/models"
-	"github.com/naoki/english/app/service"
 )
-
-type Handler struct {
-	services *service.Service
-}
 
 func (h *Handler) AddPhrase(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)
@@ -27,5 +22,16 @@ func (h *Handler) AddPhrase(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, "Cannot unmarshal body")
 		return
 	}
+
+	phraseCreate, err := h.services.Phrase.Create(&phrase)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"status":   http.StatusCreated,
+		"response": phraseCreate,
+	})
 
 }

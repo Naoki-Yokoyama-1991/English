@@ -13,6 +13,11 @@ func NewPhraseService(repo repository.Phrase) *PhraseService {
 	return &PhraseService{repo: repo}
 }
 
-func (s *PhraseService) Create(pharse *models.Phrase) {
+func (s *PhraseService) Create(pharse *models.Phrase) (*models.Phrase, error) {
+	eg_phrase, err := s.repo.Create(pharse)
+	if err != nil {
+		return nil, err
+	}
 
+	return eg_phrase, nil
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type Phrase interface {
-	Create(phrase *models.Phrase)
+	Create(phrase *models.Phrase) (*models.Phrase, error)
 }
 
 type Service struct {

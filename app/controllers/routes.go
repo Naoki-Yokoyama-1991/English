@@ -1,4 +1,4 @@
-package routes
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
@@ -14,9 +14,10 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-func (h *Handler) Routes() {
-	r := gin.New()
+func (h *Handler) Routes(r *gin.Engine) *gin.Engine {
+	router := gin.Default()
 
-	v1 := r.Group("/api")
-	v1.POST("/phrase")
+	v1 := router.Group("/api")
+	v1.POST("/phrase", h.AddPhrase)
+	return router
 }
