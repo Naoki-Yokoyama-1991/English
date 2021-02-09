@@ -7,9 +7,18 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/naoki/english/app/models"
+	"github.com/naoki/english/app/service"
 )
 
-func (h *Handler) AddPhrase(c *gin.Context) {
+type PhraseHandler struct {
+	service service.Phrase
+}
+
+func NewPhraseHandler(service service.Phrase) *PhraseHandler {
+	return &PhraseHandler{service: service}
+}
+
+func (h *PhraseHandler) AddPhrase(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, "Unable to get request")
@@ -23,7 +32,7 @@ func (h *Handler) AddPhrase(c *gin.Context) {
 		return
 	}
 
-	phraseCreate, err := h.services.Phrase.Create(&phrase)
+	phraseCreate, err := h.service.Create(&phrase)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
