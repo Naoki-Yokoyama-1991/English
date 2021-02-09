@@ -8,7 +8,6 @@ import (
 type Phrase interface {
 	AddPhrase(c *gin.Context)
 }
-
 type Handler struct {
 	Phrase
 }
@@ -25,6 +24,6 @@ func (h *Handler) Handler() *gin.Engine {
 	router.Use(gin.Recovery())
 
 	v1 := router.Group("/api")
-	v1.POST("/phrase", h.AddPhrase)
+	v1.POST("/phrases", h.AddPhrase)
 	return router
 }
