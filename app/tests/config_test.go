@@ -18,7 +18,7 @@ func TestConfigs(t *testing.T) {
 	t.Run("log1", func(t *testing.T) {
 		t.Log("log1")
 		actual := c.Postgres.GetPostgresConnectionInfo()
-		expected := "host=postgres port=5432 user=admin password=admin dbname=admin sslmode=disable"
+		expected := "host=localhost port=5432 user=user password=yoko1893 dbname=english sslmode=disable"
 		if assert.Equal(t, expected, actual) {
 			fmt.Printf("%v", "good_1")
 		} else {
